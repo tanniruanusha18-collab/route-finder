@@ -1,0 +1,13 @@
+# Ignore large map and JAR files
+*.osm.pbf
+*.jar
+
+# Ignore GraphHopper cache
+graph-cache/
+
+# Ignore logs
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
