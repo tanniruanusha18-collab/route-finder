@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>GraphHopper Route Finder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    #topbar { padding:12px; background:#f7f7f7; border-bottom:1px solid #ddd; }
+    #container { display:flex; height: calc(100vh - 62px); }
+    #sidebar { width: 340px; padding:12px; overflow:auto; border-right:1px solid #ddd; background:#fff; }
+    #map { flex:1; }
+    input[type=text] { width: 100%; padding:6px; margin:6px 0; box-sizing:border-box; }
+    select { padding:6px; margin:6px 0; }
+    .route-card { border:1px solid #ddd; padding:8px; margin:8px 0; border-radius:6px; }
+    .route-card.selected { box-shadow:0 0 0 3px rgba(0,123,255,0.08); border-color:#007bff; }
+    .route-actions { margin-top:8px; display:flex; gap:8px; }
+    .small { font-size:0.9em; color:#444; }
+    .big { font-weight:600; font-size:1.1em; }
+    .btn { padding:6px 10px; border-radius:6px; border:1px solid #007bff; background:#007bff; color:#fff; cursor:pointer; }
+    .btn.secondary { background:#fff; color:#007bff; }
+  </style>
+</head>
+<body>
+  <div id="topbar">
+    <strong>GraphHopper Route Finder</strong> — type addresses (works with cities, addresses, landmarks)
+  </div>
+
+  <div id="container">
+    <div id="sidebar">
+      <form id="routeForm" method="post">
+        <label>Start (address / city / landmark)</label>
+        <input type="text" name="start" id="startInput" placeholder="e.g. Guntur" required value="{{ start_place }}">
+        <label>End</label>
+        <input type="text" name="end" id="endInput" placeholder="e.g. Chennai" required value="{{ end_place }}">
+        <label>Vehicle</label>
+        <select name="vehicle" id="vehicle">
+          <option value="car" {% if vehicle=='car' %}selected{% endif %}>Car</option>
+          <option value="bike" {% if vehicle=='bike' %}selected{% endif %}>Bike</option>
+          <option value="foot" {% if vehicle=='foot' %}selected{% endif %}>Foot</option>
+        </select>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button type="submit" class="btn">Get Routes</button>
+          <button type="button" id="clearBtn" class="btn secondary">Clear</button>
+        </div>
+      </form>
+
+      <div id="errorBox" style="color:#c00; margin-top:10px;">
+        {% if error %}{{ error }}{% endif %}
+      </div>
+
+      <div id="routesList" style="margin-top:12px;">
+        <!-- route cards inserted here by JS -->
+      </div>
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script>
+    // Parse routes JSON from server if present
+    const routesData = {{ routes_json|default('null')|safe }};
+    const map = L.map('map').setView([20.0, 78.0], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    let routeLayers = [];
+    let selectedRouteId = null;
+    let startMarker = null;
+    let endMarker = null;
+
+    function focusRoute(routeId) {
+      // visually select card and highlight route
+      selectedRouteId = routeId;
+      document.querySelectorAll('.route-card').forEach(el => {
+        el.classList.toggle('selected', parseInt(el.dataset.id) === routeId);
+      });
+      routeLayers.forEach(item => {
+        if (item.id === routeId) {
+          item.layer.setStyle({weight:7, opacity:1.0});
+          map.fitBounds(item.layer.getBounds(), {padding:[40,40]});
+          // bring layer to front:
+          if (item.layer.bringToFront) item.layer.bringToFront();
+        } else {
+          item.layer.setStyle({weight:4, opacity:0.55});
+        }
+      });
+    }
+
+    function buildRouteCards(routes) {
+      const list = document.getElementById('routesList');
+      list.innerHTML = '';
+      routes.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'route-card';
+        div.dataset.id = r.id;
+        div.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <input class="route-name" value="${r.name}" data-id="${r.id}" style="font-weight:600; font-size:1em; width:160px;">
+              <div class="small">Distance: ${r.distance_km} km · Time: ${r.time_hours} h</div>
+            </div>
+            <div style="text-align:right">
+              <div style="width:18px; height:18px; background:${r.color}; border-radius:4px;"></div>
+              <div style="margin-top:6px;"><button class="btn" data-focus="${r.id}">Focus</button></div>
+            </div>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+
+      // click handlers
+      list.querySelectorAll('button[data-focus]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const id = parseInt(e.currentTarget.getAttribute('data-focus'));
+          focusRoute(id);
+        });
+      });
+
+      // enable renaming
+      list.querySelectorAll('.route-name').forEach(inp => {
+        inp.addEventListener('change', e => {
+          const id = parseInt(e.target.dataset.id);
+          const newName = e.target.value;
+          // update routesData in memory:
+          const r = routesData.routes.find(x => x.id === id);
+          if (r) r.name = newName;
+        });
+      });
+    }
+
+    if (routesData) {
+      // draw start/end markers
+      const start = [routesData.start.lat, routesData.start.lon];
+      const end = [routesData.end.lat, routesData.end.lon];
+
+      if (startMarker) map.removeLayer(startMarker);
+      if (endMarker) map.removeLayer(endMarker);
+
+      startMarker = L.circleMarker(start, {radius:8, color:'#d62728', fillColor:'#d62728', fillOpacity:1}).addTo(map).bindPopup('Start');
+      endMarker = L.circleMarker(end, {radius:8, color:'#2ca02c', fillColor:'#2ca02c', fillOpacity:1}).addTo(map).bindPopup('End');
+
+      // draw routes
+      routeLayers = [];
+      routesData.routes.forEach(r => {
+        const poly = L.polyline(r.coords, {color: r.color, weight:4, opacity:0.8}).addTo(map);
+        poly.on('click', () => focusRoute(r.id));
+        routeLayers.push({id: r.id, layer: poly});
+      });
+
+      buildRouteCards(routesData.routes);
+
+      // auto-focus first route
+      if (routesData.routes.length > 0) focusRoute(routesData.routes[0].id);
+    }
+
+    // Clear button behavior
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      document.getElementById('startInput').value = '';
+      document.getElementById('endInput').value = '';
+    });
+
+    // Optional: improve UX when map zoom changes - keep info but DO NOT change distance/time
+    map.on('zoomend', () => {
+      // intentionally no change to distance/time; they represent road metrics and remain constant
+    });
+  </script>
+</body>
+</html>

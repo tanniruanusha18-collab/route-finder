@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quantum Path Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    body { margin: 0; font-family: Arial; }
+    #map { height: 90vh; width: 100%; }
+    .controls { padding: 10px; background: #f5f5f5; text-align: center; }
+    .route-details { padding: 10px; font-size: 16px; }
+    .btn { padding: 6px 12px; margin: 3px; border: none; border-radius: 5px; cursor: pointer; }
+    .btn-car { background: #1976d2; color: white; }
+    .btn-bike { background: #388e3c; color: white; }
+    .btn-foot { background: #f57c00; color: white; }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <h2>🚀 Quantum Path Planner</h2>
+    Start City: <input type="text" id="start" placeholder="e.g., Bengaluru">
+    End City: <input type="text" id="end" placeholder="e.g., Chennai">
+    <button class="btn btn-car" onclick="getRoute('car')">Car</button>
+    <button class="btn btn-bike" onclick="getRoute('bike')">Bike</button>
+    <button class="btn btn-foot" onclick="getRoute('foot')">Foot</button>
+    <button class="btn" onclick="startNavigation()">▶ Start Navigation</button>
+  </div>
+
+  <div id="map"></div>
+  <div class="route-details" id="route-details">Route details will appear here.</div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([12.9716, 77.5946], 6); // Bengaluru
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19
+    }).addTo(map);
+
+    var routeLayers = [];
+    var marker;
+
+    function formatTime(minutes) {
+      let hrs = Math.floor(minutes / 60);
+      let mins = Math.round(minutes % 60);
+      return (hrs > 0 ? hrs + "h " : "") + mins + "m";
+    }
+
+    async function getRoute(profile) {
+      let start = document.getElementById("start").value;
+      let end = document.getElementById("end").value;
+
+      const response = await fetch(/route?start=${start}&end=${end}&profile=${profile});
+      const data = await response.json();
+
+      // Clear old routes
+      routeLayers.forEach(layer => map.removeLayer(layer));
+      routeLayers = [];
+
+      if (marker) map.removeLayer(marker);
+
+      if (data.paths) {
+        data.paths.forEach((path, i) => {
+          let coords = path.points.coordinates.map(c => [c[1], c[0]]);
+          let color = i === 0 ? "blue" : (i === 1 ? "green" : "orange");
+
+          let polyline = L.polyline(coords, {color: color, weight: 5, opacity: 0.7}).addTo(map);
+          routeLayers.push(polyline);
+
+          if (i === 0) { // Main route details
+            document.getElementById("route-details").innerHTML =
+              `<b>Distance:</b> ${(path.distance/1000).toFixed(1)} km<br>
+               <b>Time:</b> ${formatTime(path.time/60000)}`;
+            map.fitBounds(polyline.getBounds());
+          }
+        });
+      }
+    }
+
+    // Animate red marker along the main route
+    function startNavigation() {
+      if (routeLayers.length === 0) return;
+
+      let coords = routeLayers[0].getLatLngs();
+      let i = 0;
+
+      if (marker) map.removeLayer(marker);
+      marker = L.marker(coords[0], {icon: L.icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+        iconSize: [30, 30]
+      })}).addTo(map);
+
+      function move() {
+        if (i < coords.length) {
+          marker.setLatLng(coords[i]);
+          i++;
+          setTimeout(move, 200); // speed of navigation
+        }
+      }
+      move();
+    }
+  </script>
+</body>
+</html>

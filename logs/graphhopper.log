@@ -1,0 +1,104 @@
+2025-09-09 10:04:16.113 [main] INFO  i.d.core.server.DefaultServerFactory - Registering jersey handler with root path prefix: /
+2025-09-09 10:04:16.118 [main] INFO  i.d.core.server.DefaultServerFactory - Registering admin handler with root path prefix: /
+2025-09-09 10:04:16.403 [main] INFO  io.dropwizard.assets.AssetsBundle - Registering AssetBundle with name: assets for path /maps/*
+2025-09-09 10:04:16.405 [main] INFO  io.dropwizard.assets.AssetsBundle - Registering AssetBundle with name: webjars for path /webjars/*
+2025-09-09 10:04:16.413 [main] INFO  i.d.core.server.ServerFactory - Starting GraphHopperApplication
+                        _     _
+   __ _ _ __ __ _ _ __ | |__ | |__   ___  _ __  _ __   ___ _ __
+  / _` | '__/ _` | '_ \| '_ \| '_ \ / _ \| '_ \| '_ \ / _ \ '__|
+ | (_| | | | (_| | |_) | | | | | | | (_) | |_) | |_) |  __/ |
+  \__, |_|  \__,_| .__/|_| |_|_| |_|\___/| .__/| .__/ \___|_|
+  |___/          |_|                     |_|   |_|
+2025-09-09 10:04:16.528 [main] INFO  o.e.jetty.setuid.SetUIDListener - Opened application@3bdb2c78{HTTP/1.1, (http/1.1)}{localhost:8989}
+2025-09-09 10:04:16.528 [main] INFO  o.e.jetty.setuid.SetUIDListener - Opened admin@64693226{HTTP/1.1, (http/1.1)}{localhost:8990}
+2025-09-09 10:04:16.531 [main] INFO  org.eclipse.jetty.server.Server - jetty-10.0.23; built: 2024-08-14T01:14:42.815Z; git: 570aa4a1395ca8f9f800045f3a1fe5fe3af9a598; jvm 17.0.16+8
+2025-09-09 10:04:26.352 [main] INFO  c.g.routing.ch.CHPreparationHandler - There are no CHs to prepare
+2025-09-09 10:04:26.401 [main] INFO  com.graphhopper.GraphHopper - version 10.0|2024-11-04T16:04:43Z (9,23,7,5,2,9)
+2025-09-09 10:04:26.480 [main] INFO  com.graphhopper.GraphHopper - graph car|RAM_STORE|2D|no_turn_cost|nodes:9,edges:23,geometry:7,location_index:5,string_index:2,nodesCH:0,shortcuts:9, details:edges: 23,150,924(795MB), nodes: 18,519,102(212MB), bounds: 68.262955,97.3302567,6.7568875,35.5958641, name:(6MB), geo:638,218,651/-1(609MB)
+2025-09-09 10:04:26.561 [main] INFO  c.g.http.GraphHopperManaged - loaded graph at:graph-cache, data_reader_file:india-250903.osm.pbf, encoded values:["{\"className\":\"com.graphhopper.routing.ev.SimpleBooleanEncodedValue\",\"name\":\"car_access\",\"bits\":1,\"min_storable_value\":0,\"max_storable_value\":1,\"max_value\":1,\"negate_reverse_direction\":false,\"store_two_directions\":true,\"fwd_data_index\":0,\"bwd_data_index\":0,\"fwd_shift\":0,\"bwd_shift\":1,\"fwd_mask\":1,\"bwd_mask\":2}","{\"className\":\"com.graphhopper.routing.ev.DecimalEncodedValueImpl\",\"name\":\"car_average_speed\",\"bits\":7,\"min_storable_value\":0,\"max_storable_value\":127,\"max_value\":70,\"negate_reverse_direction\":false,\"store_two_directions\":true,\"fwd_data_index\":0,\"bwd_data_index\":0,\"fwd_shift\":2,\"bwd_shift\":9,\"fwd_mask\":508,\"bwd_mask\":65024,\"factor\":2.0,\"use_maximum_as_infinity\":false}","{\"className\":\"com.graphhopper.routing.ev.EnumEncodedValue\",\"name\":\"road_class\",\"bits\":5,\"min_storable_value\":0,\"max_storable_value\":31,\"max_value\":20,\"negate_reverse_direction\":false,\"store_two_directions\":false,\"fwd_data_index\":0,\"bwd_data_index\":0,\"fwd_shift\":16,\"bwd_shift\":-1,\"fwd_mask\":2031616,\"bwd_mask\":0,\"enum_type\":\"com.graphhopper.routing.ev.RoadClass\"}","{\"className\":\"com.graphhopper.routing.ev.EnumEncodedValue\",\"name\":\"road_environment\",\"bits\":3,\"min_storable_value\":0,\"max_storable_value\":7,\"max_value\":5,\"negate_reverse_direction\":false,\"store_two_directions\":false,\"fwd_data_index\":0,\"bwd_data_index\":0,\"fwd_shift\":21,\"bwd_shift\":-1,\"fwd_mask\":14680064,\"bwd_mask\":0,\"enum_type\":\"com.graphhopper.routing.ev.RoadEnvironment\"}","{\"className\":\"com.graphhopper.routing.ev.SimpleBooleanEncodedValue\",\"name\":\"roundabout\",\"bits\":1,\"min_storable_value\":0,\"max_storable_value\":1,\"max_value\":1,\"negate_reverse_direction\":false,\"store_two_directions\":false,\"fwd_data_index\":0,\"bwd_data_index\":0,\"fwd_shift\":24,\"bwd_shift\":-1,\"fwd_mask\":16777216,\"bwd_mask\":0}","{\"className\":\"com.graphhopper.routing.ev.SimpleBooleanEncodedValue\",\"name\":\"road_class_link\",\"bits\":1,\"min_storable_value\":0,\"max_storable_value\":1,\"max_value\":1,\"negate_reverse_direction\":false,\"store_two_directions\":false,\"fwd_data_index\":0,\"bwd_data_index\":0,\"fwd_shift\":25,\"bwd_shift\":-1,\"fwd_mask\":33554432,\"bwd_mask\":0}","{\"className\":\"com.graphhopper.routing.ev.DecimalEncodedValueImpl\",\"name\":\"max_speed\",\"bits\":7,\"min_storable_value\":0,\"max_storable_value\":127,\"max_value\":127,\"negate_reverse_direction\":false,\"store_two_directions\":true,\"fwd_data_index\":1,\"bwd_data_index\":1,\"fwd_shift\":0,\"bwd_shift\":7,\"fwd_mask\":127,\"bwd_mask\":16256,\"factor\":2.0,\"use_maximum_as_infinity\":true}","{\"className\":\"com.graphhopper.routing.ev.DecimalEncodedValueImpl\",\"name\":\"ferry_speed\",\"bits\":5,\"min_storable_value\":0,\"max_storable_value\":31,\"max_value\":14,\"negate_reverse_direction\":false,\"store_two_directions\":false,\"fwd_data_index\":1,\"bwd_data_index\":0,\"fwd_shift\":14,\"bwd_shift\":-1,\"fwd_mask\":507904,\"bwd_mask\":0,\"factor\":2.0,\"use_maximum_as_infinity\":false}","{\"className\":\"com.graphhopper.routing.ev.SimpleBooleanEncodedValue\",\"name\":\"car_subnetwork\",\"bits\":1,\"min_storable_value\":0,\"max_storable_value\":1,\"max_value\":1,\"negate_reverse_direction\":false,\"store_two_directions\":false,\"fwd_data_index\":1,\"bwd_data_index\":0,\"fwd_shift\":19,\"bwd_shift\":-1,\"fwd_mask\":524288,\"bwd_mask\":0}"], 7 bytes for edge flags, edges: 23,150,924(795MB), nodes: 18,519,102(212MB), bounds: 68.262955,97.3302567,6.7568875,35.5958641, name:(6MB), geo:638,218,651/-1(609MB)
+2025-09-09 10:04:28.293 [main] WARN  o.g.jersey.internal.inject.Providers - A provider com.codahale.metrics.health.HealthCheckRegistry registered in SERVER runtime does not implement any provider interfaces applicable in the SERVER runtime. Due to constraint configuration problems the provider com.codahale.metrics.health.HealthCheckRegistry will be ignored. 
+2025-09-09 10:04:28.774 [main] INFO  i.d.jersey.DropwizardResourceConfig - The following paths were found for the configured resources:
+
+    GET     / (com.graphhopper.application.resources.RootResource)
+    GET     /health (com.graphhopper.resources.HealthCheckResource)
+    GET     /i18n (com.graphhopper.resources.I18NResource)
+    GET     /i18n/{locale} (com.graphhopper.resources.I18NResource)
+    GET     /info (com.graphhopper.resources.InfoResource)
+    GET     /isochrone (com.graphhopper.resources.IsochroneResource)
+    POST    /match (com.graphhopper.resources.MapMatchingResource)
+    GET     /mvt/{z}/{x}/{y}.mvt (com.graphhopper.resources.MVTResource)
+    GET     /navigate/directions/v5/gh/{profile}/{coordinatesArray : .+} (com.graphhopper.navigation.NavigateResource)
+    GET     /nearest (com.graphhopper.resources.NearestResource)
+    GET     /route (com.graphhopper.resources.RouteResource)
+    POST    /route (com.graphhopper.resources.RouteResource)
+    GET     /spt (com.graphhopper.resources.SPTResource)
+
+2025-09-09 10:04:28.776 [main] INFO  o.e.j.server.handler.ContextHandler - Started i.d.j.MutableServletContextHandler@616a06e3{/,null,AVAILABLE}
+2025-09-09 10:04:28.780 [main] INFO  i.d.core.setup.AdminEnvironment - tasks = 
+
+    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
+    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
+
+2025-09-09 10:04:28.780 [main] INFO  o.e.j.server.handler.ContextHandler - Started i.d.j.MutableServletContextHandler@38a4e2b0{/,null,AVAILABLE}
+2025-09-09 10:04:28.920 [main] INFO  o.e.jetty.server.AbstractConnector - Started application@3bdb2c78{HTTP/1.1, (http/1.1)}{localhost:8989}
+2025-09-09 10:04:28.931 [main] INFO  o.e.jetty.server.AbstractConnector - Started admin@64693226{HTTP/1.1, (http/1.1)}{localhost:8990}
+2025-09-09 10:04:28.934 [main] INFO  org.eclipse.jetty.server.Server - Started Server@149c3204{STARTING}[10.0.23,sto=30000] @14297ms
+2025-09-09 10:06:14.170 [main] INFO  i.d.core.server.DefaultServerFactory - Registering jersey handler with root path prefix: /
+2025-09-09 10:06:14.175 [main] INFO  i.d.core.server.DefaultServerFactory - Registering admin handler with root path prefix: /
+2025-09-09 10:06:14.383 [main] INFO  io.dropwizard.assets.AssetsBundle - Registering AssetBundle with name: assets for path /maps/*
+2025-09-09 10:06:14.394 [main] INFO  io.dropwizard.assets.AssetsBundle - Registering AssetBundle with name: webjars for path /webjars/*
+2025-09-09 10:06:14.394 [main] INFO  i.d.core.server.ServerFactory - Starting GraphHopperApplication
+                        _     _
+   __ _ _ __ __ _ _ __ | |__ | |__   ___  _ __  _ __   ___ _ __
+  / _` | '__/ _` | '_ \| '_ \| '_ \ / _ \| '_ \| '_ \ / _ \ '__|
+ | (_| | | | (_| | |_) | | | | | | | (_) | |_) | |_) |  __/ |
+  \__, |_|  \__,_| .__/|_| |_|_| |_|\___/| .__/| .__/ \___|_|
+  |___/          |_|                     |_|   |_|
+2025-09-09 10:06:14.504 [main] ERROR i.dropwizard.core.cli.ServerCommand - Unable to start server, shutting down
+java.lang.RuntimeException: java.io.IOException: Failed to bind to localhost/127.0.0.1:8989
+	at org.eclipse.jetty.setuid.SetUIDListener.lifeCycleStarting(SetUIDListener.java:229)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.setStarting(AbstractLifeCycle.java:264)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:92)
+	at io.dropwizard.core.cli.ServerCommand.run(ServerCommand.java:52)
+	at io.dropwizard.core.cli.EnvironmentCommand.run(EnvironmentCommand.java:67)
+	at io.dropwizard.core.cli.ConfiguredCommand.run(ConfiguredCommand.java:98)
+	at io.dropwizard.core.cli.Cli.run(Cli.java:78)
+	at io.dropwizard.core.Application.run(Application.java:94)
+	at com.graphhopper.application.GraphHopperApplication.main(GraphHopperApplication.java:38)
+Caused by: java.io.IOException: Failed to bind to localhost/127.0.0.1:8989
+	at org.eclipse.jetty.server.ServerConnector.openAcceptChannel(ServerConnector.java:344)
+	at org.eclipse.jetty.server.ServerConnector.open(ServerConnector.java:304)
+	at org.eclipse.jetty.setuid.SetUIDListener.lifeCycleStarting(SetUIDListener.java:216)
+	... 8 common frames omitted
+Caused by: java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:337)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:294)
+	at org.eclipse.jetty.server.ServerConnector.openAcceptChannel(ServerConnector.java:339)
+	... 10 common frames omitted
+2025-09-09 10:06:14.504 [main] INFO  org.eclipse.jetty.server.Server - Stopped Server@4e6f2bb5{STOPPING}[10.0.23,sto=30000]
+2025-09-09 10:06:14.504 [main] INFO  org.eclipse.jetty.server.Server - Shutdown Server@4e6f2bb5{STOPPING}[10.0.23,sto=30000]
+2025-09-09 10:06:14.514 [main] WARN  i.dropwizard.core.cli.ServerCommand - Failure during stop server
+java.util.concurrent.ExecutionException: java.lang.IllegalStateException: STOPPED
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:396)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.jetty.server.Server.doStop(Server.java:490)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.stop(AbstractLifeCycle.java:132)
+	at io.dropwizard.core.cli.ServerCommand.run(ServerCommand.java:56)
+	at io.dropwizard.core.cli.EnvironmentCommand.run(EnvironmentCommand.java:67)
+	at io.dropwizard.core.cli.ConfiguredCommand.run(ConfiguredCommand.java:98)
+	at io.dropwizard.core.cli.Cli.run(Cli.java:78)
+	at io.dropwizard.core.Application.run(Application.java:94)
+	at com.graphhopper.application.GraphHopperApplication.main(GraphHopperApplication.java:38)
+Caused by: java.lang.IllegalStateException: STOPPED
+	at org.eclipse.jetty.server.handler.ContextHandler.shutdown(ContextHandler.java:773)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:575)
+	at java.base/java.util.stream.AbstractPipeline.evaluateToArrayNode(AbstractPipeline.java:260)
+	at java.base/java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:616)
+	at org.eclipse.jetty.util.component.Graceful.shutdown(Graceful.java:146)
+	... 8 common frames omitted

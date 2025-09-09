@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GraphHopper Route Input</title>
+</head>
+<body>
+  <h2>Enter Route Points</h2>
+  <form method="POST">
+    <label>Points (lat,lon;lat,lon):</label><br>
+    <input type="text" name="points" value="12.9716,77.5946;13.0827,80.2707" size="50"><br><br>
+
+    <label>Vehicle:</label>
+    <select name="vehicle">
+      <option value="car">Car</option>
+      <option value="bike">Bike</option>
+      <option value="foot">Foot</option>
+    </select><br><br>
+
+    <button type="submit">Get Route</button>
+  </form>
+</body>
+</html>
